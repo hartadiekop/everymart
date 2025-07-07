@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WebToko by EveryBali</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Tambahkan Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .navbar-brand img {
+      max-width: 30vw;
+      height: auto;
+      margin-left: 5px;
+    }
+    .navbar {
+      /* Ensure sticky and dark background */
+      background-color: #212529 !important;
+    }
+    .product-card {
+      height: 250px;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: row;
+      background: #23272b;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+      align-items: stretch;
+    }
+    .product-card-col1 {
+      flex: 0 0 250px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      min-width: 120px;
+      max-width: 250px;
+      background: transparent;
+      height: 100%;
+    }
+    .product-card-img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+      background: #adb5bd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 0;
+      max-width: 250px;
+      max-height: 250px;
+    }
+    .product-card-col2 {
+      flex: 1;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .product-card-col3 {
+      flex: 0 0 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+    }
+    .bottom-navbar {
+      position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1050;
+      background: #212529; border-top: 1px solid #343a40; display: flex; justify-content: space-around; align-items: center; height: 60px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.12);
+    }
+    .bottom-navbar .icon-btn { background: none; border: none; color: #fff; font-size: 1.7rem; position: relative; }
+    .cart-badge {
+      position: absolute; top: 0; right: 0; background: #dc3545; color: #fff; border-radius: 50%; font-size: 0.8rem; padding: 2px 6px;
+    }
+    .cart-total {
+      font-size: 1.1rem; color: #fff; margin-left: 8px;
+    }
+    .modal-backdrop.show { opacity: 0.85; }
+    .accordion-button:not(.collapsed) { color: #fff; background-color: #343a40; }
+    .accordion-body { color: #adb5bd; }
+    .btn-icon { padding: 0.5rem; }
+    .btn-icon:active { background: #343a40; }
+    .sticky-search-bar {
+      position: sticky;
+      top: 56px; /* height of navbar */
+      z-index: 1040;
+      background: #212529;
+      padding: 0.75rem 0 0.5rem 0;
+      border-bottom: 1px solid #343a40;
+    }
+    .search-input-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 2;
+      padding: 0 4px;
+      display: none;
+    }
+    .search-clear-btn.visible {
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .product-card {
+        height: 120px;
+        min-height: 100px;
+        flex-direction: row;
+        align-items: stretch;
+        padding: 0.25rem 0.1rem;
+      }
+      .product-card-col1 {
+        flex: 0 0 120px;
+        max-width: 120px;
+        min-width: 80px;
+        height: 100%;
+      }
+      .product-card-img {
+        max-width: 120px;
+        max-height: 120px;
+        aspect-ratio: 1 / 1;
+        height: 100%;
+        width: 100%;
+      }
+      .product-card-col2 {
+        padding: 0.2rem 0.2rem;
+        font-size: 0.5rem;
+      }
+      .product-card-col3 {
+        flex: 0 0 44px;
+        min-width: 44px;
+      }
+    }
+    @media (max-width: 400px) {
+      .product-card {
+        height: 80px;
+      }
+      .product-card-col1 {
+        flex: 0 0 80px;
+        max-width: 80px;
+        min-width: 56px;
+      }
+      .product-card-img {
+        max-width: 80px;
+        max-height: 80px;
+      }
+      .product-card-col3 {
+        flex: 0 0 36px;
+        min-width: 36px;
+      }
+    }
+    .user-info-form .form-floating > .form-control {
+      height: calc(2.5rem + 2px); /* Smaller height for floating inputs */
+      padding-top: 1rem;
+      padding-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .user-info-form .form-floating > label {
+      padding-top: 0.5rem; /* Adjust label padding */
+      font-size: 0.9rem;
+    }
+    .history-table th, .history-table td {
+      font-size: 0.85rem;
+      padding: 0.4rem;
+    }
+  </style>
+</head>
+<body>
+  <p>&nbsp;</p>
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <a class="navbar-brand">
+      <button class="btn btn-outline-secondary btn-sm" style="margin-left: 12px;" onclick="location.href='uniwebview://close'"><i class="fa-solid fa-arrow-left"></i></button>
+      <!--<img src="https://hartadiekop.github.io/webcache/cache/living-bali-text-logo.png" alt="antrian distrik logo">-->
+      <p class="badge bg-success bg-gradient text-wrap">WebToko</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <button class="btn btn-sm btn-outline-light" id="history-order-btn">
+        <i class="fa-solid fa-history"></i> Riwayat Order
+      </button>
+    </a>
+    <!--<div class="ms-auto me-3">
+      <button class="btn btn-sm btn-outline-light" id="history-order-btn">
+        <i class="fa-solid fa-history"></i> Riwayat Antrian
+      </button>
+    </div>-->
+  </nav>
+  <!-- SEARCH/FILTER BAR -->
+  <div class="sticky-search-bar">
+    <div class="container">
+      <div class="search-input-group">
+        <input id="search-input" type="text" class="form-control form-control-dark" placeholder="Cari produk..." autocomplete="off">
+        <button id="search-clear-btn" class="search-clear-btn" tabindex="-1" aria-label="Clear">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4">
+    <!-- USER INFO FORM -->
+    <div class="user-info-form mb-4 p-3 border rounded border-secondary">
+      <h5 class="mb-3"><i class="fa-solid fa-user-check me-2"></i>Informasi Pemesan</h5>
+      <input type="hidden" id="order-timestamp">
+      <div class="row g-2">
+        <div class="col-md-6">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control form-control-sm" id="nama-input" placeholder="Nama Lengkap">
+            <label for="nama-input">Nama Lengkap</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating mb-2">
+            <input type="tel" class="form-control form-control-sm" id="whatsapp-input" placeholder="Nomor WhatsApp">
+            <label for="whatsapp-input">Nomor WhatsApp</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control form-control-sm" id="kota-input" placeholder="Kota">
+            <label for="kota-input">Kota</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control form-control-sm" id="provinsi-input" placeholder="Provinsi">
+            <label for="provinsi-input">Provinsi</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMO CARDS -->
+    <div id="promo-cards" class="mb-4"></div>
+    <!-- PRODUCT LIST -->
+    <div id="product-list"></div>
+    <div class="d-grid mt-3 mb-5" id="load-more-container">
+      <button id="load-more-btn" class="btn btn-outline-secondary btn-sm">
+        <i class="fa-solid fa-angles-down"></i> Load More
+      </button>
+      <br><br>
+    </div>
+  </div>
+  <!-- BOTTOM NAVBAR -->
+  <div class="bottom-navbar">
+    <button class="icon-btn" id="cart-btn" title="Cart">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span class="cart-badge" id="cart-count">0</span>
+    </button>
+    <span class="cart-total" id="cart-total">Rp0</span>
+    <button class="icon-btn" id="checkout-btn" title="Checkout">
+      <i class="fa-solid fa-cash-register"></i>
+    </button>
+  </div>
+  <!-- CART MODAL -->
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartModalLabel"><i class="fa-solid fa-cart-shopping me-2"></i>Shopping Cart</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="cart-modal-body">
+          <!-- Cart items will be rendered here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+          <button type="button" class="btn btn-success" id="cart-modal-checkout-btn"><i class="fa-solid fa-cash-register"></i> Checkout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CHECKOUT MODAL -->
+  <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="checkoutModalLabel"><i class="fa-solid fa-circle-question me-2"></i>Checkout Confirmation</h5>
+        </div>
+        <div class="modal-body">
+          Pastikan data Nama, WhatsApp, Kota, dan Provinsi sudah terisi dengan benar.
+          <br><br>Yakin mau proses Checkout and kirim data order via WhatsApp?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Not Yet</button>
+          <button type="button" class="btn btn-success" id="confirm-checkout-btn"><i class="fa-brands fa-whatsapp"></i> Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ORDER HISTORY MODAL -->
+  <div class="modal fade" id="orderHistoryModal" tabindex="-1" aria-labelledby="orderHistoryModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content bg-dark text-light">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderHistoryModalLabel"><i class="fa-solid fa-history me-2"></i>Riwayat Order</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="order-history-modal-body">
+          <!-- Order history items will be rendered here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // --- PROMO DATA ---
+    const promos = [
+      {
+        id: 1,
+        header: "PROMO HEMAT",
+        title: "Diskon 5% untuk pembelian di atas Rp500.000",
+        subtitle: "Berlaku untuk semua produk",
+        detail: "Dapatkan diskon 5% setiap belanja minimal Rp500.000 dalam satu transaksi. Berlaku kelipatan dan otomatis saat checkout."
+      },
+      {
+        id: 2,
+        header: "CASHBACK 30%",
+        title: "30% Cashback Setiap Belanja",
+        subtitle: "Tanpa minimum pembelian. Baca info lebih detail",
+        detail: "Nikmati pengiriman gratis ke seluruh area Denpasar tanpa minimum pembelian. Berlaku setiap hari."
+      }
+    ];
+
+    // --- PRODUCT DATA (dummy, 30 items) ---
+    const allProductsDUMMY = Array.from({length: 30}, (_, i) => ({
+      id: i+1,
+      name: `Produk Segar #${i+1}`,
+      unit: "kg",
+      price: 15000 + (i%5)*5000,
+      image: i%3===0 ? null : `https://picsum.photos/seed/bpf${i+1}/200/200`
+    }));
+
+    // --- PRODUCT DATA (real) ---
+    const allProducts = [
+      { id: 1, name: "WebToko Seumur Hidup (10 produk)", unit: "Sekali Bayar Selamanya", price: 120000, image: null },
+      { id: 2, name: "Tambah 10 produk", unit: "1x", price: 50000, image: null },
+      //{ id: 3, name: "Sayur Bayam Segar", unit: "1 ikat", price: 5000, image: null },
+      { id: 4, name: "Domain Custom (Per Tahun)", unit: "Per Tahun", price: 250000, image: null },
+      //{ id: 5, name: "Ikan Salmon Fillet", unit: "500g", price: 200000, image: null },
+      { id: 6, name: "TikTok Content (15x Posting)", unit: "1 Bulan", price: 150000, image: null },
+      { id: 7, name: "Instagram Content (15x Posting)", unit: "1 Bulan", price: 150000, image: null },
+      //{ id: 8, name: "Kopi Bubuk Kapal Api", unit: "250g", price: 25000, image: null },
+      //{ id: 9, name: "Susu UHT Indomilk", unit: "1L", price: 20000, image: null }, // No image
+      { id: 10, name: "WebToko Telegram Bot", unit: "Sekali Bayar Selamanya", price: 300000, image: null }, // No image
+      //{ id: 11, name: "Beras Merah Organik", unit: "5kg", price: 80000, image: null },
+      //{ id: 12, name: "Sayur Brokoli Segar", unit: "500g", price: 15000, image: null },
+      //{ id: 13, name: "Daging Ayam Tanpa Tulang (Campur Dada Sayap Paha)", unit: "1kg", price: 51000, image: null },
+      //{ id: 14, name: "Ikan Tuna Segar", unit: "500g", price: 180000, image: null }, // No image
+      //{ id: 15, name: "Minyak Zaitun Extra Virgin", unit: "500ml", price: 120000, image: null },
+      //{ id: 16, name: "Garam Dapur Beryodium", unit: "1kg", price: 5000, image: null }, // No image
+      //{ id: 17, name: "Kacang Hijau Organik", unit: "1kg", price: 30000, image: null },
+      //{ id: 18, name: "Susu Kental Manis Frisian Flag", unit: "390g", price: 12000, image: null }, // No image
+      //{ id: 19, name: "Mie Goreng ABC Special", unit: "5 bungkus", price: 20000, image: null }, // No image
+      //{ id: 20, name: "Beras Putih Premium", unit: "5kg", price: 70000, image: null }, // No image
+      //{ id: 21, name: "Telur Bebek Segar", unit: "10 butir", price: 40000, image: null }, // No image
+      //{ id: 22, name: "Sayur Kangkung Segar", unit: "1 ikat", price: 6000, image: null }, // No image
+      //{ id: 23, name: "Daging Sapi Cincang", unit: "1kg", price: 90000, image: null }, // No image
+      //{ id: 24, name: "Ikan Nila Segar", unit: "1kg", price: 90000, image: null }, // No image
+      //{ id: 25, name: "Minyak Goreng Sania", unit: "2L", price: 32000, image: null }, // No image
+      //{ id: 26, name: "Gula Pasir Gulaku Premium", unit: "1kg", price: 16000, image: null }, // No image
+      //{ id: 27, name: "Kopi Bubuk Toraja", unit: "250g", price: 30000, image: null }, // No image
+      //{ id: 28, name: "Susu UHT Ultra Milk", unit: "1L", price: 22000, image: null }, // No image
+      //{ id: 29, name: "Mie Instan Indomie Goreng", unit: "5 bungkus", price: 18000, image: null }, // No image
+      //{ id: 30, name: "Beras Hitam Organik", unit: "5kg", price: 85000, image: null } // No image
+    ];
+
+    // --- CART STATE ---
+    let cart = JSON.parse(localStorage.getItem('bpf_cart') || '{}');
+    function saveCart() {
+      localStorage.setItem('bpf_cart', JSON.stringify(cart));
+    }
+    function getCartCount() {
+      return Object.values(cart).reduce((a,b)=>a+b.qty,0);
+    }
+    function getCartTotal() {
+      return Object.values(cart).reduce((a,b)=>a+b.qty*b.price,0);
+    }
+    function formatRupiah(num) {
+      return 'Rp' + num.toLocaleString('id-ID');
+    }
+
+    // --- USER INFO STATE & Timestamp ---
+    let orderTimestamp = new Date().toISOString();
+    document.getElementById('order-timestamp').value = orderTimestamp;
+
+    function saveUserInfo() {
+      const userInfo = {
+        name: document.getElementById('nama-input').value,
+        whatsapp: document.getElementById('whatsapp-input').value,
+        city: document.getElementById('kota-input').value,
+        province: document.getElementById('provinsi-input').value,
+      };
+      localStorage.setItem('bpf_userInfo', JSON.stringify(userInfo));
+    }
+
+    function loadUserInfo() {
+      const userInfo = JSON.parse(localStorage.getItem('bpf_userInfo') || '{}');
+      document.getElementById('nama-input').value = userInfo.name || '';
+      document.getElementById('whatsapp-input').value = userInfo.whatsapp || '';
+      document.getElementById('kota-input').value = userInfo.city || '';
+      document.getElementById('provinsi-input').value = userInfo.province || '';
+    }
+
+    function attachUserInfoListeners() {
+      ['nama-input', 'whatsapp-input', 'kota-input', 'provinsi-input'].forEach(id => {
+        document.getElementById(id).addEventListener('input', saveUserInfo);
+      });
+    }
+    
+    // --- ORDER HISTORY ---
+    function getOrderHistory() {
+      return JSON.parse(localStorage.getItem('bpf_orderHistory') || '[]');
+    }
+
+    function saveOrderToHistory(order) {
+      const history = getOrderHistory();
+      history.unshift(order); // Add to the beginning of the array
+      localStorage.setItem('bpf_orderHistory', JSON.stringify(history.slice(0, 50))); // Keep last 50 orders
+    }
+
+    function formatOrderTimestamp(isoString) {
+      const date = new Date(isoString);
+      return date.toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+    }
+    
+    window.handleFollowupOrder = function(orderIndex) {
+      const history = getOrderHistory();
+      const order = history[orderIndex];
+      if (!order) return;
+
+      let msg = `Follow up untuk antrian tanggal ${formatOrderTimestamp(order.orderTime)}:\n`;
+      msg += `Nama: ${order.name}\n`;
+      msg += `WhatsApp: ${order.whatsapp}\n`;
+      msg += `Kota: ${order.city}\n`;
+      msg += `Provinsi: ${order.province}\n\n`;
+      msg += `Detail Pesanan:\n`;
+      order.items.forEach((item, i) => {
+        msg += `${i + 1}. ${item.name} (${item.unit}) x${item.qty} = ${formatRupiah(item.qty * item.price)}\n`;
+      });
+      msg += `Total: ${formatRupiah(order.total)}\nMohon info status antrian saya. Terima kasih.`;
+      
+      window.open(`uniwebview://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function renderOrderHistoryModal() {
+      const history = getOrderHistory();
+      const body = document.getElementById('order-history-modal-body');
+      if (history.length === 0) {
+        body.innerHTML = '<div class="text-center text-muted"><i class="fa-regular fa-face-sad-tear fa-2x mb-2"></i><br>Belum ada riwayat antrian.</div>';
+        return;
+      }
+
+      body.innerHTML = `
+        <div class="accordion" id="orderHistoryAccordion">
+          ${history.map((order, index) => `
+            <div class="accordion-item bg-dark">
+              <h2 class="accordion-header" id="headingOrder${index}">
+                <button class="accordion-button ${index > 0 ? 'collapsed' : ''}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOrder${index}" aria-expanded="${index === 0 ? 'true' : 'false'}" aria-controls="collapseOrder${index}">
+                  Antrian: ${formatOrderTimestamp(order.orderTime)} - ${order.name || 'Tanpa Nama'}
+                </button>
+              </h2>
+              <div id="collapseOrder${index}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" aria-labelledby="headingOrder${index}" data-bs-parent="#orderHistoryAccordion">
+                <div class="accordion-body">
+                  <table class="table table-sm table-borderless text-light history-table">
+                    <tbody>
+                      <tr><th scope="row" style="width:120px;">Waktu Order</th><td>: ${formatOrderTimestamp(order.orderTime)}</td></tr>
+                      <tr><th scope="row">Nama</th><td>: ${order.name || '-'}</td></tr>
+                      <tr><th scope="row">WhatsApp</th><td>: ${order.whatsapp || '-'}</td></tr>
+                      <tr><th scope="row">Kota</th><td>: ${order.city || '-'}</td></tr>
+                      <tr><th scope="row">Provinsi</th><td>: ${order.province || '-'}</td></tr>
+                    </tbody>
+                  </table>
+                  <h6 class="mt-3">Item Pesanan:</h6>
+                  <table class="table table-sm table-striped table-dark history-table">
+                    <thead>
+                      <tr><th>#</th><th>Produk</th><th>Qty</th><th>Harga</th><th>Subtotal</th></tr>
+                    </thead>
+                    <tbody>
+                      ${order.items.map((item, i) => `
+                        <tr>
+                          <td>${i + 1}</td>
+                          <td>${item.name} (${item.unit})</td>
+                          <td>${item.qty}</td>
+                          <td>${formatRupiah(item.price)}</td>
+                          <td>${formatRupiah(item.qty * item.price)}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                  <div class="text-end mt-2"><strong>Total: ${formatRupiah(order.total)}</strong></div>
+                  <div class="mt-3 text-end">
+                    <button class="btn btn-sm btn-success" onclick="handleFollowupOrder(${index})">
+                      <i class="fa-brands fa-whatsapp"></i> Followup Antrian
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+
+    // --- RENDER PROMO CARDS ---
+    function renderPromos() {
+      const promoDiv = document.getElementById('promo-cards');
+      promoDiv.innerHTML = promos.map((promo, idx) => `
+        <div class="card text-bg-success bg-gradient mb-3">
+          <div class="card-header">${promo.header}</div>
+          <div class="card-body">
+            <h5 class="card-title">${promo.title}</h5>
+            <p class="card-text mb-2 text-muted">${promo.subtitle}</p>
+            <div class="accordion" id="promo-acc-${promo.id}">
+              <div class="accordion-item bg-dark border-0">
+                <h2 class="accordion-header" id="heading${promo.id}">
+                  <button class="accordion-button accordion-button-sm collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${promo.id}" aria-expanded="false" aria-controls="collapse${promo.id}">
+                    Read More
+                  </button>
+                </h2>
+                <div id="collapse${promo.id}" class="accordion-collapse collapse" aria-labelledby="heading${promo.id}" data-bs-parent="#promo-acc-${promo.id}">
+                  <div class="accordion-body">${promo.detail}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- SEARCH/FILTER STATE ---
+    let searchTerm = '';
+    let filteredProducts = allProducts.slice();
+
+    // --- FILTER FUNCTION ---
+    function filterProducts(term, scrollToList = false) {
+      searchTerm = term.trim().toLowerCase();
+      if (!searchTerm) {
+        filteredProducts = allProducts.slice();
+      } else {
+        filteredProducts = allProducts.filter(p =>
+          p.name.toLowerCase().includes(searchTerm)
+        );
+      }
+      renderProducts(true);
+      // Show/hide clear button
+      document.getElementById('search-clear-btn').classList.toggle('visible', !!searchTerm);
+      // Scroll to product list if found and requested
+      if (filteredProducts.length > 0 && scrollToList) {
+        setTimeout(() => {
+          const prodList = document.getElementById('product-list');
+          if (prodList) {
+            prodList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    }
+
+    // --- PRODUCT LIST PAGINATION (MODIFIED ICONS) ---
+    let productPage = 0, pageSize = 10;
+    function renderProducts(reset=false) {
+      const listDiv = document.getElementById('product-list');
+      const loadMoreContainer = document.getElementById('load-more-container');
+      const loadMoreBtn = document.getElementById('load-more-btn');
+      if (reset) { listDiv.innerHTML = ''; productPage = 0; }
+      const products = filteredProducts;
+      const start = productPage * pageSize;
+      const end = start + pageSize;
+      const batch = products.slice(start, end);
+
+      if (batch.length === 0 && productPage === 0) {
+        // Produk tidak ditemukan
+        listDiv.innerHTML = `
+          <div class="alert alert-warning text-center mt-4">
+            <i class="fa-solid fa-magnifying-glass fa-2x mb-2"></i><br>
+            Produk tidak ditemukan.<br>
+            <button class="btn btn-success mt-3" id="contact-admin-btn">
+              <i class="fa-brands fa-whatsapp"></i> Contact Admin
+            </button>
+          </div>
+        `;
+        loadMoreContainer.style.display = 'none';
+        document.getElementById('contact-admin-btn').onclick = function() {
+          let msg = "Halo Admin, saya ingin pesan produk yang tidak ada di katalog online: ";
+          if (searchTerm) msg += `"${searchTerm}"`;
+          window.open(`uniwebview://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+        };
+        return;
+      }
+
+      batch.forEach(prod => {
+        const card = document.createElement('div');
+        card.className = 'product-card d-flex';
+        card.innerHTML = `
+          <div class="product-card-col1">
+            ${prod.image ? `<img src="${prod.image}" alt="${prod.name}" class="product-card-img">`
+              : `<div class="product-card-img d-flex align-items-center justify-content-center" style="background:#adb5bd;">
+                  <i class="fa-solid fa-image fa-2x text-secondary"></i>
+                </div>`
+            }
+          </div>
+          <div class="product-card-col2">
+            <h6>${prod.name}</h6>
+            <div class="text-muted mb-1">${prod.unit} &middot; <span>${formatRupiah(prod.price)}</span></div>
+          </div>
+          <div class="product-card-col3">
+            <button class="btn btn-success btn-icon btn-sm" style="height:100%;" title="Add to cart" onclick="addToCart(${prod.id})">
+              <i class="fa-solid fa-cart-plus"></i>&nbsp;...
+            </button>&nbsp;&nbsp;
+          </div>
+        `;
+        listDiv.appendChild(card);
+      });
+      productPage++;
+
+      if (productPage * pageSize < products.length) {
+        loadMoreContainer.style.display = '';
+        loadMoreBtn.disabled = false;
+        loadMoreBtn.innerHTML = `<i class="fa-solid fa-angles-down"></i> Load More`;
+      } else {
+        loadMoreContainer.style.display = '';
+        loadMoreBtn.disabled = true;
+        loadMoreBtn.innerHTML = `<i class="fa-regular fa-face-smile"></i> That's all. Happy Shopping`;
+      }
+    }
+
+    // --- ADD TO CART ---
+    window.addToCart = function(id) {
+      const prod = allProducts.find(p=>p.id===id);
+      if (!prod) return;
+      if (!cart[id]) cart[id] = { ...prod, qty: 0 };
+      cart[id].qty++;
+      saveCart();
+      updateCartUI();
+    }
+
+    // --- UPDATE CART UI ---
+    function updateCartUI() {
+      document.getElementById('cart-count').textContent = getCartCount();
+      document.getElementById('cart-total').textContent = formatRupiah(getCartTotal());
+    }
+
+    // --- RENDER CART MODAL (MODIFIED ICONS) ---
+    function renderCartModal() {
+      const body = document.getElementById('cart-modal-body');
+      const items = Object.values(cart);
+      if (!items.length) {
+        body.innerHTML = '<div class="text-center text-muted"><i class="fa-regular fa-face-frown fa-2x mb-2"></i><br>Cart is empty.</div>';
+        document.getElementById('cart-modal-checkout-btn').disabled = true;
+        return;
+      }
+      document.getElementById('cart-modal-checkout-btn').disabled = false;
+      body.innerHTML = items.map(item => `
+        <div class="d-flex align-items-center mb-3">
+          <div style="width:60px;height:60px;flex-shrink:0;">
+            ${item.image ? `<img src="${item.image}" alt="${item.name}" class="rounded" style="width:100%;height:100%;object-fit:cover;">`
+              : `<div class="bg-secondary rounded d-flex align-items-center justify-content-center" style="width:100%;height:100%;">
+                  <i class="fa-solid fa-image fa-lg text-secondary"></i>
+                </div>`
+            }
+          </div>
+          <div class="ms-3 flex-grow-1">
+            <div><strong>${item.name}</strong></div>
+            <div class="text-muted">${item.unit} &middot; ${formatRupiah(item.price)}</div>
+            <div class="input-group input-group-sm mt-1" style="max-width:120px;">
+              <button class="btn btn-outline-secondary" onclick="updateCartQty(${item.id},-1)"><i class="fa-solid fa-minus"></i></button>
+              <input type="text" class="form-control text-center" value="${item.qty}" readonly>
+              <button class="btn btn-outline-secondary" onclick="updateCartQty(${item.id},1)"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+          <div class="ms-2 text-end" style="min-width:70px;">
+            <div>${formatRupiah(item.qty*item.price)}</div>
+            <button class="btn btn-sm btn-outline-danger mt-2" onclick="removeFromCart(${item.id})" title="Remove">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('') + `<div class="text-end mt-3"><strong>Total: ${formatRupiah(getCartTotal())}</strong></div>`;
+    }
+
+    // --- CART MODAL QTY/REMOVE ---
+    window.updateCartQty = function(id, delta) {
+      if (!cart[id]) return;
+      cart[id].qty += delta;
+      if (cart[id].qty <= 0) delete cart[id];
+      saveCart();
+      updateCartUI();
+      renderCartModal();
+    }
+    window.removeFromCart = function(id) {
+      delete cart[id];
+      saveCart();
+      updateCartUI();
+      renderCartModal();
+    }
+
+    // --- SHOW CART MODAL ---
+    document.getElementById('cart-btn').onclick = function() {
+      renderCartModal();
+      new bootstrap.Modal(document.getElementById('cartModal')).show();
+    }
+    document.getElementById('cart-modal-checkout-btn').onclick = function() {
+      bootstrap.Modal.getInstance(document.getElementById('cartModal')).hide();
+      setTimeout(()=>new bootstrap.Modal(document.getElementById('checkoutModal')).show(), 300);
+    }
+
+    // --- CHECKOUT MODAL ---
+    document.getElementById('checkout-btn').onclick = function() {
+      if (getCartCount() === 0) return;
+      new bootstrap.Modal(document.getElementById('checkoutModal')).show();
+    }
+    document.getElementById('confirm-checkout-btn').onclick = function() {
+      // Compose WA message
+      const items = Object.values(cart);
+      if (!items.length) return;
+
+      const userName = document.getElementById('nama-input').value || "Pelanggan";
+      const userWhatsapp = document.getElementById('whatsapp-input').value || "Tidak diisi";
+      const userCity = document.getElementById('kota-input').value || "Tidak diisi";
+      const userProvince = document.getElementById('provinsi-input').value || "Tidak diisi";
+      const currentOrderTime = document.getElementById('order-timestamp').value;
+
+      let msg = `Halo Admin, saya ingin order:\n\n`;
+      msg += `--- Informasi Pemesan ---\n`;
+      msg += `Nama: ${userName}\n`;
+      msg += `WhatsApp: ${userWhatsapp}\n`;
+      msg += `Kota: ${userCity}\n`;
+      msg += `Provinsi: ${userProvince}\n`;
+      msg += `Waktu Order: ${formatOrderTimestamp(currentOrderTime)}\n\n`;
+      msg += `--- Detail Pesanan ---\n`;
+      items.forEach((item,i) => {
+        msg += `${i+1}. ${item.name} (${item.unit}) x${item.qty} = ${formatRupiah(item.qty*item.price)}\n`;
+      });
+      msg += `Total: ${formatRupiah(getCartTotal())}\nTerima kasih.`;
+      
+      // Save order to history
+      const orderToSave = {
+        orderTime: currentOrderTime,
+        name: userName,
+        whatsapp: userWhatsapp,
+        city: userCity,
+        province: userProvince,
+        items: items.map(item => ({ id: item.id, name: item.name, unit: item.unit, price: item.price, qty: item.qty, image: item.image })), // Store relevant item details
+        total: getCartTotal()
+      };
+      saveOrderToHistory(orderToSave);
+
+      // Open WhatsApp
+      window.open(`uniwebview://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+      // Clear cart
+      cart = {};
+      saveCart();
+      updateCartUI();
+      bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
+      renderCartModal();
+    }
+
+    // --- SEARCH INPUT EVENT (MODIFIED) ---
+    const searchInput = document.getElementById('search-input');
+    const searchClearBtn = document.getElementById('search-clear-btn');
+    searchInput.addEventListener('input', function(e) {
+      filterProducts(e.target.value, true);
+    });
+    searchClearBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      filterProducts('', true);
+      searchInput.focus();
+    });
+
+    // --- LOAD MORE PRODUCTS (MODIFIED) ---
+    document.getElementById('load-more-btn').onclick = function() {
+      renderProducts();
+    }
+
+    // --- HISTORY ORDER BUTTON ---
+    document.getElementById('history-order-btn').onclick = function() {
+      renderOrderHistoryModal();
+      new bootstrap.Modal(document.getElementById('orderHistoryModal')).show();
+    }
+
+    // --- INIT (MODIFIED) ---
+    renderPromos();
+    loadUserInfo(); // Load user info from localStorage
+    attachUserInfoListeners(); // Attach listeners to save user info
+    filterProducts(''); // will call renderProducts(true)
+    updateCartUI();
+  </script>
+</body>
+</html>
