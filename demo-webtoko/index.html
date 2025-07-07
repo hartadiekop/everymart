@@ -359,6 +359,7 @@
     const promos = [
       {
         id: 1,
+        color: "bg-success",
         header: "Cari Cuan Cepat!",
         title: "<i class='fa-solid fa-money-bill-trend-up fa-2x mb-2'></i>&nbsp;&nbsp;Akses Market Bule & Turis",
         subtitle: "Web Toko, Rental & Jasa simple siap pakai. Khusus target market Pulau Bali. Baca info lebih detail...",
@@ -366,30 +367,33 @@
       },
       {
         id: 2,
+        color: "bg-warning",
         header: "Khusus Bisnis UMKM Bali",
         title: "<i class='fa-solid fa-money-bill-transfer fa-2x mb-2'></i>&nbsp;&nbsp;Sekali Bayar Rp 120K Untuk Selamanya",
         subtitle: "Web Toko Online langsung tersambung WhatsApp. Pembayaran QRIS sudah kita siapkan. Baca info lebih detail...",
-        detail: "<ul><li>Anda dapat alamat website : <b>www.NAMATOKO.everybali.com</b></li><li>Kami bantu semua, anda terima jadi beres.</li><li>Dalam 24jam web toko online anda sudah siap.</li><li>Bisa ganti logo sendiri (misal: logo-toko.png).</li><li>Bisa ganti warna tema sesuai selera.</li><li>Upload produk biar kami yang bantu.</li><li>Bisa terima pembayaran QRIS, transfer bank, dan cash on delivery (COD).</li><li>Bisa terima order via WhatsApp langsung dari pelanggan.</li><li>Tidak ada biaya bulanan, sekali bayar selamanya.</li><li>Bisa tambahkan banner iklan promo milik anda sendiri atau Google Adsense di bagian manapun.</li></ul>",
+        detail: "<ul class='list-group'><li class='list-group-item'>Anda dapat alamat website : <b>www.NAMATOKO.everybali.com</b></li><li class='list-group-item'>Kami bantu semua, anda terima jadi beres.</li><li class='list-group-item'>Dalam 24jam web toko online anda sudah siap.</li><li class='list-group-item'>Bisa ganti logo milik sendiri (misal: logo-toko.png).</li><li class='list-group-item'>Bisa ganti warna tema sesuai 4 pilihan warna.</li><li class='list-group-item'>Upload produk biar kami yang bantu.</li><li class='list-group-item'>Bisa terima pembayaran QRIS, transfer bank, dan cash on delivery (COD).</li><li class='list-group-item'>Bisa terima order via WhatsApp langsung dari pelanggan.</li><li class='list-group-item'>Tidak ada biaya bulanan, sekali bayar selamanya.</li><li class='list-group-item'>Bisa tambahkan banner iklan promo milik anda sendiri atau Google Adsense di bagian manapun.</li></ul>",
       },
       {
         id: 3,
+        color: "bg-info",
         header: "Jualan Lebih Cepat Laku",
         title: "<i class='fa-solid fa-thumbs-up fa-2x'></i>&nbsp;&nbsp;Konversi Sales 5x Lebih Cepat",
         subtitle: "Karena tampilan simple dan tersambung dengan WhatsApp & Instagram. Baca info lebih detail...",
-        detail: `<ul>
-          <li>Gampang sambungin produk dengan posting Instagram & TikTok.</li>
-          <li>Calon konsumen langsung fokus lihat produk.</li>
-          <li>Nggak perlu saingan dengan produk lain seperti di Shopee/Toped.</li>
-          <li>Konversi sales bisa naik 3x Lipat.</li>
-          <li>Di-index Google SEO selamanya.</li>
+        detail: `<ul class='list-group'>
+          <li class='list-group-item'>Gampang sambungin produk dengan posting Instagram & TikTok.</li>
+          <li class='list-group-item'>Calon konsumen langsung fokus lihat produk.</li>
+          <li class='list-group-item'>Nggak perlu saingan dengan produk/lapak/toko lain seperti di Shopee/Toped.</li>
+          <li class='list-group-item'>Konversi sales bisa naik 3x Lipat.</li>
+          <li class='list-group-item'>Di-index Google SEO selamanya.</li>
         </ul>`
       },
       {
         id: 4,
+        color: "bg-danger",
         header: "Demo Tampilan",
         title: "<i class='fa-brands fa-google-drive fa-2x'></i>&nbsp;&nbsp;Contoh Tampilan Web nya?",
         subtitle: "Persis seperti WebToko yang anda lihat ini. Baca info lebih detail...",
-        detail: "<ul><li>Warna tema bisa diganti sesuai pilihan.</li><li>Kami yang kerjakan semua anda terima beres.</li>"
+        detail: "<ul class='list-group'><li class='list-group-item'>Warna tema bisa diganti sesuai 4 pilihan warna.</li><li class='list-group-item'>Kami yang kerjakan semua anda terima beres.</li>"
       }
     ];
 
@@ -578,7 +582,7 @@
     function renderPromos() {
       const promoDiv = document.getElementById('promo-cards');
       promoDiv.innerHTML = promos.map((promo, idx) => `
-        <div class="card text-bg-success bg-gradient mb-3">
+        <div class="card text-${promo.header} bg-gradient mb-3">
           <div class="card-header">${promo.header}</div>
           <div class="card-body">
             <h5 class="card-title">${promo.title}</h5>
