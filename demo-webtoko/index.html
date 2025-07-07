@@ -454,7 +454,7 @@
       });
       msg += `Total: ${formatRupiah(order.total)}\nMohon info status Order saya. Terima kasih.`;
       
-      window.open(`uniwebview://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open(`https://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     function renderOrderHistoryModal() {
@@ -598,7 +598,7 @@
         document.getElementById('contact-admin-btn').onclick = function() {
           let msg = "Halo Admin, saya ingin pesan produk yang tidak ada di katalog online: ";
           if (searchTerm) msg += `"${searchTerm}"`;
-          window.open(`uniwebview://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+          window.open(`https://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
         };
         return;
       }
@@ -761,7 +761,7 @@
       saveOrderToHistory(orderToSave);
 
       // Open WhatsApp
-      window.open(`uniwebview://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open(`https://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
       // Clear cart
       cart = {};
       saveCart();
