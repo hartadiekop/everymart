@@ -347,10 +347,10 @@
 
     // --- PRODUCT DATA (real) ---
     const allProducts = [
-      { id: 1, name: "WebToko Seumur Hidup (Maks. 10 produk)", unit: "Sekali Bayar Selamanya", price: 120000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
-      { id: 2, name: "Tambah 10 Produk", unit: "Sekali Bayar", price: 50000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
+      { id: 1, name: "WebToko Seumur Hidup (Maks. 20 produk)", unit: "Sekali Bayar Selamanya", price: 120000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
+      { id: 2, name: "Tambah 20 Produk", unit: "Sekali Bayar", price: 50000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
       //{ id: 3, name: "Sayur Bayam Segar", unit: "1 ikat", price: 5000, image: null },
-      { id: 4, name: "Domain NAMA_TOKO_KAMU.COM (Per Tahun)", unit: "Per Tahun", price: 250000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
+      { id: 4, name: "Sewa Admin Bales Whatsapp", unit: "Per Bulan", price: 300000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
       //{ id: 5, name: "Ikan Salmon Fillet", unit: "500g", price: 200000, image: null },
       { id: 6, name: "TikTok Content (10x Posting)", unit: "Per Bulan", price: 150000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
       { id: 7, name: "Instagram Content (10x Posting)", unit: "Per Bulan", price: 150000, image: "https://hartadiekop.github.io/webcache/cache/webtoko-mascott-logo.png" },
@@ -744,7 +744,7 @@
       msg += `Waktu Order: ${formatOrderTimestamp(currentOrderTime)}\n\n`;
       msg += `--- Detail Pesanan ---\n`;
       items.forEach((item,i) => {
-        msg += `${i+1}. ${item.name} (${item.unit}) x${item.qty} = ${formatRupiah(item.qty*item.price)}\n`;
+        msg += `*${i+1}. ${item.name}* (${item.unit}) x${item.qty} = ${formatRupiah(item.qty*item.price)}\n`;
       });
       msg += `Total: ${formatRupiah(getCartTotal())}\nTerima kasih.`;
       
