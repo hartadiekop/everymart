@@ -243,6 +243,11 @@
 
     <!-- PROMO CARDS -->
     <div id="promo-cards" class="mb-4"></div>
+    <div id="cta-admin-1" class="mb-4">
+      <button class="btn btn-success mt-3" id="contact-admin-btn">
+        <i class="fa-brands fa-whatsapp"></i> Yuk Ngobrol sama Admin
+      </button>
+    </div>
     <!-- PRODUCT LIST -->
     <div id="product-list"></div>
     <div class="d-grid mt-3 mb-5" id="load-more-container">
@@ -474,7 +479,7 @@
       });
       msg += `Total: ${formatRupiah(order.total)}\nMohon info status Order saya. Terima kasih.`;
       
-      window.open(`https://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open(`https://wa.me/62881037608107?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     function renderOrderHistoryModal() {
@@ -618,7 +623,7 @@
         document.getElementById('contact-admin-btn').onclick = function() {
           let msg = "Halo Admin, saya ingin pesan produk yang tidak ada di katalog online: ";
           if (searchTerm) msg += `"${searchTerm}"`;
-          window.open(`https://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+          window.open(`https://wa.me/62881037608107?text=${encodeURIComponent(msg)}`, '_blank');
         };
         return;
       }
@@ -781,7 +786,7 @@
       saveOrderToHistory(orderToSave);
 
       // Open WhatsApp
-      window.open(`https://wa.me/6285123580178?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open(`https://wa.me/62881037608107?text=${encodeURIComponent(msg)}`, '_blank');
       // Clear cart
       cart = {};
       saveCart();
