@@ -794,14 +794,15 @@
     }
 
     // --- REDIRECT TO DESKTOP ---
-    (function redirectIfDesktop() {
+    function redirectIfDesktop() {
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       if (!isMobile) {
       window.location.href = "https://www.everybali.com";
       }
-    })();
+    };
 
     // --- INIT (MODIFIED) ---
+    redirectIfDesktop(); // Redirect to desktop site if not on mobile
     renderPromos();
     loadUserInfo(); // Load user info from localStorage
     attachUserInfoListeners(); // Attach listeners to save user info
